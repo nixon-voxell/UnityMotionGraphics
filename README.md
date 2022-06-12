@@ -1,6 +1,6 @@
 # Unity Motion Graphics
 
-A package to speed up and simplify the process of motion graphic creation.
+A package to speed up and simplify the process of motion graphics creation.
 
 - [Unity Motion Graphics](#unity-motion-graphics)
   - [Installation](#installation)
