@@ -10,8 +10,9 @@ namespace Voxell.MotionGFX
 {
   using Inspector;
 
+  [AddComponentMenu("Motion GFX/MXClip Group")]
   [ExecuteInEditMode]
-  public class ClipGroup : MonoBehaviour
+  public class MXClipGroup : MonoBehaviour
   {
     [InspectOnly] public MXClipPlayable MXClip;
 
@@ -39,8 +40,8 @@ namespace Voxell.MotionGFX
       }
     }
 
-    public Clip[] Clips => _clips;
-    [SerializeField] private Clip[] _clips;
+    public MXClip[] Clips => _clips;
+    [SerializeField] private MXClip[] _clips;
 
     /// <returns>Sum of the duration of all clips.</returns>
     public float GetDuration()

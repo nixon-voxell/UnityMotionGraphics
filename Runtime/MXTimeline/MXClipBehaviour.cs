@@ -4,6 +4,6 @@ namespace Voxell.MotionGFX
 {
   public class MXClipBehaviour : PlayableBehaviour
   {
-    public ClipGroup clipGroup;
+    public MXClipGroup clipGroup;
   }
 }
