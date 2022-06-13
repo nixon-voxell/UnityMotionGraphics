@@ -16,7 +16,7 @@ namespace Voxell.MotionGFX
 
       MXClipGroup clipGroup = clipGroupRef.Resolve(graph.GetResolver());
       // assign playable asset to clip group component so that it can manually refresh
-      if (clipGroup != null) clipGroup.MXClip = this;
+      if (clipGroup != null) clipGroup.AbstractMXClip = this;
       clipBehaviour.clipGroup = clipGroup;
 
       return playable;

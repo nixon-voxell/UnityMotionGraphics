@@ -10,21 +10,26 @@ namespace Voxell.MotionGFX
 {
   using Inspector;
 
-  [AddComponentMenu("Motion GFX/MXClip Group")]
+  [AddComponentMenu("Motion GFX/AbstractMXClip Group")]
   [ExecuteInEditMode]
   public class MXClipGroup : MonoBehaviour
   {
-    [InspectOnly] public MXClipPlayable MXClip;
+    [InspectOnly] public MXClipPlayable AbstractMXClip;
 
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
+    private void OnEnable() => TimelineUpdate();
+
     private void Update()
     {
-      if (MXClip != null)
+      TimelineUpdate();
+    }
+
+    private void TimelineUpdate()
+    {
+      #if UNITY_EDITOR
+      if (AbstractMXClip != null)
       {
-        TimelineClip timelineClip = MXClip.timelineClip;
-        MXClip.timelineClip.duration = GetDuration();
+        TimelineClip timelineClip = AbstractMXClip.timelineClip;
+        AbstractMXClip.timelineClip.duration = GetDuration();
 
         TrackAsset trackAsset = timelineClip.GetParentTrack();
         if (trackAsset != null)
@@ -34,14 +39,13 @@ namespace Voxell.MotionGFX
           timelineClip.duration = math.max(minDuration, GetDuration());
         }
 
-        #if UNITY_EDITOR
         TimelineEditor.Refresh(RefreshReason.WindowNeedsRedraw);
-        #endif
       }
+      #endif
     }
 
-    public MXClip[] Clips => _clips;
-    [SerializeField] private MXClip[] _clips;
+    public AbstractMXClip[] Clips => _clips;
+    [SerializeField] private AbstractMXClip[] _clips;
 
     /// <returns>Sum of the duration of all clips.</returns>
     public float GetDuration()
