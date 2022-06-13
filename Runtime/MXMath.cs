@@ -2,7 +2,7 @@ using Unity.Mathematics;
 
 namespace Voxell.MotionGFX
 {
-  public static class MotionMath
+  public static class MXMath
   {
     public static float EaseInSine(float t)
     {
