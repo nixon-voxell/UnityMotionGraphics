@@ -16,10 +16,58 @@ namespace Voxell.MotionGFX
   {
     [InspectOnly] public MXClipPlayable AbstractMXClip;
 
-    private void OnEnable() => TimelineUpdate();
+    public MXSequence[] Sequences => _sequences;
+    private MXSequence[] _sequences;
+
+    public float Duration => _duration;
+    private float _duration;
+
+    public AbstractMXClip[] Clips => _clips;
+    [SerializeField] private AbstractMXClip[] _clips;
+
+    public void GenerateSequences()
+    {
+      _duration = 0.0f;
+      _sequences = new MXSequence[_clips.Length];
+
+      for (int c=0; c < _clips.Length; c++)
+      {
+        MXSequence seq = new MXSequence();
+
+        _clips[c].CreateSequence(in seq);
+        // accumulated duration will be the start time of the current sequence
+        _duration += seq.CalculateDuration(_duration);
+
+        _sequences[c] = seq;
+      }
+    }
+
+    public void Evaluate(float clipGroupTime)
+    {
+      for (int s=0; s < _sequences.Length; s++)
+      {
+        MXSequence seq = _sequences[s];
+
+        // evaluate if clip group time in between sequence start and end time
+        if (clipGroupTime >= seq.StartTime && clipGroupTime <= seq.EndTime)
+        {
+          _sequences[s].Evaluate(clipGroupTime);
+
+          // sequences cannot overlap, so we only ever need to evaluate one sequence at a time
+          break;
+        }
+      }
+    }
+
+    private void OnEnable()
+    {
+      GenerateSequences();
+      TimelineUpdate();
+    }
 
     private void Update()
     {
+      GenerateSequences();
       TimelineUpdate();
     }
 
@@ -29,33 +77,19 @@ namespace Voxell.MotionGFX
       if (AbstractMXClip != null)
       {
         TimelineClip timelineClip = AbstractMXClip.timelineClip;
-        AbstractMXClip.timelineClip.duration = GetDuration();
+        AbstractMXClip.timelineClip.duration = Duration;
 
         TrackAsset trackAsset = timelineClip.GetParentTrack();
         if (trackAsset != null)
         {
           // the minimum duration of a clip is the length of a single frame
           double minDuration = 1/trackAsset.timelineAsset.editorSettings.frameRate;
-          timelineClip.duration = math.max(minDuration, GetDuration());
+          timelineClip.duration = math.max(minDuration, Duration);
         }
 
         TimelineEditor.Refresh(RefreshReason.WindowNeedsRedraw);
       }
       #endif
-    }
-
-    public AbstractMXClip[] Clips => _clips;
-    [SerializeField] private AbstractMXClip[] _clips;
-
-    /// <returns>Sum of the duration of all clips.</returns>
-    public float GetDuration()
-    {
-      float duration = 0.0f;
-
-      for (int c=0; c < _clips.Length; c++)
-        duration += _clips[c] != null ? _clips[c].GetDuration() : 0.0f;
-
-      return duration;
     }
   }
 }
