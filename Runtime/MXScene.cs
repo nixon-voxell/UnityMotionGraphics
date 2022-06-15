@@ -10,9 +10,9 @@ namespace Voxell.MotionGFX
 {
   using Inspector;
 
-  [AddComponentMenu("Motion GFX/AbstractMXClip Group")]
+  [AddComponentMenu("Motion GFX/MX Scene")]
   [ExecuteInEditMode]
-  public class MXClipGroup : MonoBehaviour
+  public class MXScene : MonoBehaviour
   {
     [InspectOnly] public MXClipPlayable AbstractMXClip;
 
@@ -42,16 +42,16 @@ namespace Voxell.MotionGFX
       }
     }
 
-    public void Evaluate(float clipGroupTime)
+    public void Evaluate(float sceneTime)
     {
       for (int s=0; s < _sequences.Length; s++)
       {
         MXSequence seq = _sequences[s];
 
         // evaluate if clip group time in between sequence start and end time
-        if (clipGroupTime >= seq.StartTime && clipGroupTime <= seq.EndTime)
+        if (sceneTime >= seq.StartTime && sceneTime <= seq.EndTime)
         {
-          _sequences[s].Evaluate(clipGroupTime);
+          _sequences[s].Evaluate(sceneTime);
 
           // sequences cannot overlap, so we only ever need to evaluate one sequence at a time
           break;

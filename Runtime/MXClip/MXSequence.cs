@@ -5,8 +5,6 @@ namespace Voxell.MotionGFX
 {
   public class MXSequence
   {
-    private List<AbstractMXAction> _actions;
-
     public float StartTime => _startTime;
     private float _startTime;
 
@@ -15,22 +13,22 @@ namespace Voxell.MotionGFX
 
     public float EndTime => _startTime + _seqDuration;
 
+    private List<MXActionHolder> _actionHolders;
+
     public MXSequence()
     {
-      this._actions = new List<AbstractMXAction>();
+      this._actionHolders = new List<MXActionHolder>();
     }
 
-    public AbstractMXAction PlayAction(in AbstractMXAction action)
+    public MXActionHolder Play(MXAction.Act action)
     {
-      _actions.Add(action);
-      return action;
+      MXActionHolder actionHolder = new MXActionHolder(action);
+      _actionHolders.Add(actionHolder);
+
+      return actionHolder;
     }
 
-    public void Pause(float duration)
-    {
-      AbstractMXAction pauseAction = new MXPauseAction(duration);
-      PlayAction(in pauseAction);
-    }
+    public void Pause(float duration) => Play(MXAction.PauseAct).Wait(duration);
 
     /// <returns>Sum of wait duration of all actions</returns>
     public float CalculateDuration(float startTime)
@@ -39,29 +37,37 @@ namespace Voxell.MotionGFX
       _seqDuration = 0.0f;
 
       // setting up all start time is being assigned
-      for (int a=0; a < _actions.Count; a++)
+      for (int a=0; a < _actionHolders.Count; a++)
       {
-        _actions[a].SetStartTime(_seqDuration);
-        _seqDuration += _actions[a].WaitDuration;
+        MXActionHolder actionHolder = _actionHolders[a];
+
+        actionHolder.SetStartTime(_seqDuration);
+        _seqDuration += actionHolder.WaitDuration;
       }
 
       // making sure that the duration of sequence encapsulates all animation duration too
-      for (int a=0; a < _actions.Count; a++)
-        _seqDuration = math.max(_seqDuration, _actions[a].EndTime);
+      for (int a=0; a < _actionHolders.Count; a++)
+        _seqDuration = math.max(_seqDuration, _actionHolders[a].EndTime);
 
       return _seqDuration;
     }
 
-    public void Evaluate(float clipGroupTime)
+    public void Evaluate(float sceneTime)
     {
-      float clipTime = clipGroupTime - _startTime;
+      float clipTime = sceneTime - _startTime;
 
-      for (int a=0, actionCount=_actions.Count; a < actionCount; a++)
+      for (int a=0, actionCount=_actionHolders.Count; a < actionCount; a++)
       {
-        AbstractMXAction action = _actions[a];
+        MXActionHolder actionHolder = _actionHolders[a];
+
+        float actionTime = math.clamp(
+          clipTime, actionHolder.StartTime, actionHolder.EndTime
+        ) - actionHolder.StartTime;
+
+        float t = actionTime / actionHolder.AnimDuration;
 
         // actions can overlap, so we need to evaluate all occuring actions
-        _actions[a].Evaluate(math.clamp(clipTime, action.StartTime, action.EndTime));
+        actionHolder.action(t);
       }
     }
   }
