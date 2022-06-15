@@ -15,7 +15,7 @@ namespace Voxell.MotionGFX
       public Transform endT;
     }
 
-    public MXTransformAction(float animDuration, ref Data data, Transition transition) : base(animDuration)
+    public MXTransformAction(float animDuration, ref Data data, MXMath.Transition transition) : base(animDuration)
     {
       this.data = data;
       this.transition = transition;

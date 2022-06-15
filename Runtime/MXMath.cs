@@ -4,6 +4,8 @@ namespace Voxell.MotionGFX
 {
   public static class MXMath
   {
+    public delegate float Transition(float t);
+
     public static float EaseInSine(float t)
     {
       return 1 - math.cos((t * math.PI) * 0.5f);
@@ -17,6 +19,12 @@ namespace Voxell.MotionGFX
     public static float EaseInOutSine(float t)
     {
       return -(math.cos(math.PI * t) - 1) * 0.5f;
+    }
+
+    public static Transition CreateBezierTransition(float p0x, float p0y, float p1x, float p1y)
+    {
+      float CBTrans(float t) => CubicBezier(p0x, p0y, p1x, p1y, t);
+      return CBTrans;
     }
 
     public static float CubicBezier(float p0x, float p0y, float p1x, float p1y, float t)

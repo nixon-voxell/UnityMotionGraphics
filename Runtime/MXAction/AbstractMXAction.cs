@@ -12,7 +12,7 @@ namespace Voxell.MotionGFX
 
     private protected float _animDuration = 0.0f;
     private protected float _waitDuration = 0.0f;
-    private protected Transition transition;
+    private protected MXMath.Transition transition;
 
     public AbstractMXAction(float animDuration)
     {
@@ -27,7 +27,5 @@ namespace Voxell.MotionGFX
     public abstract void Evaluate(float clipTime);
 
     public void SetStartTime(float startTime) => _startTime = startTime;
-
-    public delegate float Transition(float t);
   }
 }

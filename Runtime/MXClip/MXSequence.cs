@@ -45,6 +45,7 @@ namespace Voxell.MotionGFX
         _seqDuration += _actions[a].WaitDuration;
       }
 
+      // making sure that the duration of sequence encapsulates all animation duration too
       for (int a=0; a < _actions.Count; a++)
         _seqDuration = math.max(_seqDuration, _actions[a].EndTime);
 
