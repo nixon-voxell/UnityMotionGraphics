@@ -14,7 +14,7 @@
   "version": "0.1.0",
   "dependencies": {
     "com.unity.timeline": "1.7.1",
-    "com.unity.mathematics": "1.2.5",
+    "com.unity.mathematics": "1.2.6",
     "voxell.util": "1.4.2"
   },
   "hideInEditor": false
