@@ -21,13 +21,13 @@ namespace Voxell.MotionGFX
       return -(math.cos(math.PI * t) - 1) * 0.5f;
     }
 
-    public static Transition CreateBezierTransition(float p0x, float p0y, float p1x, float p1y)
+    public static Transition CubicBezierTransition(float p0x, float p0y, float p1x, float p1y)
     {
       float CBTrans(float t) => CubicBezier(p0x, p0y, p1x, p1y, t);
       return CBTrans;
     }
 
-    public static Transition CreateBezierTransition(float2 p0, float2 p1)
+    public static Transition CubicBezierTransition(float2 p0, float2 p1)
     {
       float CBTrans(float t) => CubicBezier(p0, p1, t);
       return CBTrans;
