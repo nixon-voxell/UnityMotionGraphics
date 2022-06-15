@@ -59,12 +59,8 @@ namespace Voxell.MotionGFX
       {
         AbstractMXAction action = _actions[a];
 
-        // evaluate if clip group time in between sequence start and end time
-        if (clipTime >= action.StartTime && clipTime <= action.EndTime)
-        {
-          // actions can overlap, so we need to evaluate all occuring actions
-          _actions[a].Evaluate(clipTime);
-        }
+        // actions can overlap, so we need to evaluate all occuring actions
+        _actions[a].Evaluate(math.clamp(clipTime, action.StartTime, action.EndTime));
       }
     }
   }
