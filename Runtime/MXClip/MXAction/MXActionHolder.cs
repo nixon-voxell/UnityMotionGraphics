@@ -9,11 +9,11 @@ namespace Voxell.MotionGFX
     public float StartTime => _startTime;
     private float _startTime;
 
-    public float WaitDuration => _waitDuration;
-    private float _waitDuration;
-
     public float AnimDuration => _animDuration;
     private float _animDuration;
+
+    public float WaitDuration => _waitDuration;
+    private float _waitDuration;
 
     public float EndTime => _startTime + _animDuration;
 
@@ -21,8 +21,8 @@ namespace Voxell.MotionGFX
     {
       this.action = action;
       this._startTime = -1.0f;
-      this._waitDuration = 1.0f;
       this._animDuration = 1.0f;
+      this._waitDuration = 0.0f;
     }
 
     public MXActionHolder Animate(float duration)

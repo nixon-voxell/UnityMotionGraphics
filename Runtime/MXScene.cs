@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Playables;
 using Unity.Mathematics;
 
 #if UNITY_EDITOR
@@ -14,13 +15,14 @@ namespace Voxell.MotionGFX
   [ExecuteInEditMode]
   public class MXScene : MonoBehaviour
   {
-    [InspectOnly] public MXClipPlayable AbstractMXClip;
+    [InspectOnly] public MXClipPlayable clipPlayable;
 
     public MXSequence[] Sequences => _sequences;
     private MXSequence[] _sequences;
 
     public float Duration => _duration;
     private float _duration;
+    private float __duration;
 
     public AbstractMXClip[] Clips => _clips;
     [SerializeField] private AbstractMXClip[] _clips;
@@ -61,6 +63,7 @@ namespace Voxell.MotionGFX
 
     private void OnEnable()
     {
+      Debug.Log("OnEnable");
       GenerateSequences();
       TimelineUpdate();
     }
@@ -74,20 +77,28 @@ namespace Voxell.MotionGFX
     private void TimelineUpdate()
     {
       #if UNITY_EDITOR
-      if (AbstractMXClip != null)
+      if (clipPlayable != null)
       {
-        TimelineClip timelineClip = AbstractMXClip.timelineClip;
-        AbstractMXClip.timelineClip.duration = Duration;
+        TimelineClip timelineClip = clipPlayable.timelineClip;
+        clipPlayable.timelineClip.duration = _duration;
 
         TrackAsset trackAsset = timelineClip.GetParentTrack();
         if (trackAsset != null)
         {
           // the minimum duration of a clip is the length of a single frame
           double minDuration = 1/trackAsset.timelineAsset.editorSettings.frameRate;
-          timelineClip.duration = math.max(minDuration, Duration);
+          timelineClip.duration = math.max(minDuration, _duration);
+          // PlayableAsset playableAsset = timelineClip.asset as PlayableAsset;
+          // Debug.Log(playableAsset);
         }
 
         TimelineEditor.Refresh(RefreshReason.WindowNeedsRedraw);
+
+        if (__duration != _duration)
+        {
+          TimelineEditor.inspectedDirector.RebuildGraph();
+          __duration = _duration;
+        }
       }
       #endif
     }
