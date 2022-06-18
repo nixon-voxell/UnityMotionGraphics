@@ -48,13 +48,11 @@ namespace Voxell.MotionGFX
       TimelineEditor.Refresh(RefreshReason.ContentsModified);
 
       // global time still 0.0f
-      // start time will return -1.0f when timeline clip is not assigned yet
-      float startTime = StartTime;
-      if (startTime != -1.0f)
+      if (clipPlayable != null)
       {
         float globalTime = (float) TimelineEditor.inspectedDirector.time;
         ISeqHolder seqHolder = this as ISeqHolder;
-        seqHolder.InitEvaluation(globalTime - startTime); 
+        seqHolder.InitEvaluation(globalTime);
       }
     }
 
@@ -62,13 +60,11 @@ namespace Voxell.MotionGFX
     {
       TimelineClipUpdate();
 
-      // start time will return -1.0f when timeline clip is not assigned yet
-      float startTime = StartTime;
-      if (startTime != -1.0f)
+      if (clipPlayable != null)
       {
         float globalTime = (float) TimelineEditor.inspectedDirector.time;
         ISeqHolder seqHolder = this as ISeqHolder;
-        seqHolder.Evaluate(globalTime - startTime); 
+        seqHolder.Evaluate(globalTime);
       }
     }
 
