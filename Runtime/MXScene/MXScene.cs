@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
-using UnityEngine.Playables;
 using Unity.Mathematics;
 
 #if UNITY_EDITOR
