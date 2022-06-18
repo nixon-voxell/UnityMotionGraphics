@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.Playables;
 using Unity.Mathematics;
 
 #if UNITY_EDITOR
@@ -23,16 +24,18 @@ namespace Voxell.MotionGFX
     List<IHolder> ISeqHolder.Holders => _holders;
     private protected List<IHolder> _holders;
 
-    float IHolder.StartTime => _startTime;
-    private protected float _startTime;
+    public float StartTime =>
+      clipPlayable?.timelineClip == null ? -1.0f : (float) clipPlayable.timelineClip.start;
 
-    float IHolder.Duration => _duration;
+    public float Duration => _duration;
     private protected float _duration;
     private float __duration;
 
-    float IHolder.EndTime => _startTime + _duration;
+    float IHolder.EndTime => StartTime + _duration;
 
     float ISeqHolder.PrevGlobalTime { get; set; }
+    float ISeqHolder.PrevStartTime { get; set; }
+    float ISeqHolder.PrevDuration { get; set; }
 
     #region Unity Events
 
@@ -40,12 +43,33 @@ namespace Voxell.MotionGFX
     {
       _holders = new List<IHolder>(_clips.Length);
       for (int c=0; c < _clips.Length; c++) _holders.Add(new MXSequence());
+
       TimelineClipUpdate();
+      TimelineEditor.Refresh(RefreshReason.ContentsModified);
+
+      // global time still 0.0f
+      // start time will return -1.0f when timeline clip is not assigned yet
+      float startTime = StartTime;
+      if (startTime != -1.0f)
+      {
+        float globalTime = (float) TimelineEditor.inspectedDirector.time;
+        ISeqHolder seqHolder = this as ISeqHolder;
+        seqHolder.InitEvaluation(globalTime - startTime); 
+      }
     }
 
     private void Update()
     {
       TimelineClipUpdate();
+
+      // start time will return -1.0f when timeline clip is not assigned yet
+      float startTime = StartTime;
+      if (startTime != -1.0f)
+      {
+        float globalTime = (float) TimelineEditor.inspectedDirector.time;
+        ISeqHolder seqHolder = this as ISeqHolder;
+        seqHolder.Evaluate(globalTime - startTime); 
+      }
     }
 
     #endregion

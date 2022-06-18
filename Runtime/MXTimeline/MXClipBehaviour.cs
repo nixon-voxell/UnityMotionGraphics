@@ -6,13 +6,13 @@ namespace Voxell.MotionGFX
   {
     public MXScene scene;
 
-    public override void ProcessFrame(Playable playable, FrameData info, object playerData)
-    {
-      if (scene == null) return;
+    // public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+    // {
+    //   if (scene == null) return;
 
-      float playableTime = (float) playable.GetTime();
-      ISeqHolder seqHolder = scene as ISeqHolder;
-      seqHolder.InitEvaluation(playableTime);
-    }
+    //   float playableTime = (float) playable.GetTime();
+    //   ISeqHolder seqHolder = scene as ISeqHolder;
+    //   seqHolder.Evaluate(playableTime);
+    // }
   }
 }

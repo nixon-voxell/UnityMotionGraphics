@@ -17,6 +17,8 @@ namespace Voxell.MotionGFX
     float IHolder.EndTime => _startTime + _duration;
 
     float ISeqHolder.PrevGlobalTime { get; set; }
+    float ISeqHolder.PrevStartTime { get; set; }
+    float ISeqHolder.PrevDuration { get; set; }
 
     public MXSequence()
     {

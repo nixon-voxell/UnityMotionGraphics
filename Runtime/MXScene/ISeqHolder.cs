@@ -10,12 +10,14 @@ namespace Voxell.MotionGFX
 
     List<IHolder> Holders { get; }
     float PrevGlobalTime { get; internal protected set; }
+    float PrevStartTime { get; internal protected set; }
+    float PrevDuration { get; internal protected set; }
 
     void ClearHolders() => Holders.Clear();
 
     void InitEvaluation(float globalTime)
     {
-      PrevGlobalTime = globalTime;
+      UpdatePreviousData(globalTime);
       float localTime = globalTime - StartTime;
 
       int holderIdx = 0;
@@ -36,12 +38,13 @@ namespace Voxell.MotionGFX
 
     void IHolder.Evaluate(float globalTime)
     {
-      // direction that the time moves
-      float timeDirection = math.sign(globalTime - PrevGlobalTime);
-      if (timeDirection == 0.0f) return;
-
+      float durationChange = Duration - PrevDuration;
       float localTime = globalTime - StartTime;
-      float prevLocalTime = PrevGlobalTime - StartTime;
+      float prevLocalTime = PrevGlobalTime - PrevStartTime + durationChange;
+
+      // direction that the time moves
+      float timeDirection = math.sign(localTime - prevLocalTime);
+      if (timeDirection == 0.0f) return;
 
       float localStartTime = math.min(localTime, prevLocalTime) - BUFFER_TIME;
       float localEndTime = math.max(localTime, prevLocalTime) + BUFFER_TIME;
@@ -75,7 +78,14 @@ namespace Voxell.MotionGFX
         for (int h=endIdx; h-- > startIdx;) Holders[h].Evaluate(localTime);
       }
 
+      UpdatePreviousData(globalTime);
+    }
+
+    private void UpdatePreviousData(float globalTime)
+    {
       PrevGlobalTime = globalTime;
+      PrevStartTime = StartTime;
+      PrevDuration = Duration;
     }
   }
 }

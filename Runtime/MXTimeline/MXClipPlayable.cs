@@ -20,11 +20,6 @@ namespace Voxell.MotionGFX
       if (scene != null)
       {
         scene.clipPlayable = this;
-
-        ISeqHolder seqHolder = scene as ISeqHolder;
-        // TODO: playable time is 0.0f..
-        float playableTime = (float) playable.GetTime();
-        seqHolder.InitEvaluation(playableTime);
       }
 
       return playable;
