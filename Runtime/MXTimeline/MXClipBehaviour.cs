@@ -8,8 +8,11 @@ namespace Voxell.MotionGFX
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
+      if (scene == null) return;
+
       float playableTime = (float) playable.GetTime();
-      scene.Evaluate(playableTime);
+      ISeqHolder seqHolder = scene as ISeqHolder;
+      seqHolder.InitEvaluation(playableTime);
     }
   }
 }
