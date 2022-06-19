@@ -9,13 +9,22 @@ namespace Voxell.MotionGFX
 
     public static void PauseAct(float t) {}
 
-    /// <summary>Move transfrom from a start position to an end position.</summary>
-    public static Act Move(
-      float3 startPos, float3 endPos, Transform transform, MXMath.Transition transition
+    /// <summary>Translate transfrom from a start position to an end position.</summary>
+    public static Act SetTranslation(float3 trans, Transform transform)
+    {
+      void SetTranslationAct(float t) => transform.position = trans;
+      return SetTranslationAct;
+    }
+
+    /// <summary>Translate transfrom from a start position to an end position.</summary>
+    public static Act Translate(
+      ref float3 startTrans, float3 endTrans, Transform transform, MXMath.Transition transition
     )
     {
-      void MoveAct(float t) => transform.position = math.lerp(startPos, endPos, transition(t));
-      return MoveAct;
+      float3 _startTrans = startTrans;
+      void TranslateAct(float t) => transform.position = math.lerp(_startTrans, endTrans, transition(t));
+      startTrans = endTrans;
+      return TranslateAct;
     }
 
     /// <summary>Rotate transfrom from a start euler angle to an end euler angle.</summary>
