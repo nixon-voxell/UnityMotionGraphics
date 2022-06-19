@@ -27,6 +27,7 @@ namespace Voxell.MotionGFX
 
     #region Sequence Creation
 
+    /// <summary>Play an action.</summary>
     public MXActionHolder Play(MXAction.Act action)
     {
       MXActionHolder actionHolder = new MXActionHolder(action);
@@ -35,6 +36,17 @@ namespace Voxell.MotionGFX
       return actionHolder;
     }
 
+    /// <summary>Play a one shot action in a single frame.</summary>
+    public MXActionHolder OneShot(MXAction.Act action)
+    {
+      MXActionHolder actionHolder = new MXActionHolder(action);
+      _holders.Add(actionHolder);
+      actionHolder.Animate(0.0f).Wait(0.0f);
+
+      return actionHolder;
+    }
+
+    /// <summary>Pause for a specific amount of duration.</summary>
     public void Pause(float duration) => Play(MXAction.PauseAct).Animate(duration).Wait(duration);
 
     #endregion
