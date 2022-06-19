@@ -1,3 +1,13 @@
+## [0.3.0]
+
+### Changes
+
+- Only add `BUFFER_TIME` to the opposite moving direction when evaulating in `ISeqHolder`.
+
+### Bug Fixes
+
+- Prevent initialization when `TimelineEditor.inspectedDirector` is null.
+
 ## [0.2.0]
 
 ### New Features
