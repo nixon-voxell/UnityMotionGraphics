@@ -2,28 +2,8 @@ using Unity.Mathematics;
 
 namespace Voxell.MotionGFX
 {
-  public static class MXMath
+  public partial class MXMath
   {
-    public delegate float Transition(float t);
-
-    public static float EaseInSine(float t)
-    {
-      return 1 - math.cos((t * math.PI) * 0.5f);
-    }
-
-    public static float EaseOutSine(float t)
-    {
-      return math.sin((t * math.PI) * 0.5f);
-    }
-
-    public static float EaseInOutSine(float t)
-    {
-      return -(math.cos(math.PI * t) - 1) * 0.5f;
-    }
-
-    public static readonly MXMath.Transition EaseInOutExpo =
-      MXMath.CubicBezierTransition(0.87f, 0.0f, 0.13f, 1.0f);
-
     public static Transition CubicBezierTransition(float p0x, float p0y, float p1x, float p1y)
     {
       float CBTrans(float t) => CubicBezier(p0x, p0y, p1x, p1y, t);

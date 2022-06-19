@@ -36,14 +36,36 @@ namespace Voxell.MotionGFX
       return actionHolder;
     }
 
+    /// <summary>Play multiple actions.</summary>
+    public void PlaySeq(MXAction.Act[] actions, float animateTime, float waitTime)
+    {
+      for (int a=0; a < actions.Length; a++)
+      {
+        MXActionHolder actionHolder = new MXActionHolder(actions[a]);
+        actionHolder.Animate(animateTime).Wait(waitTime);
+        _holders.Add(actionHolder);
+      }
+    }
+
     /// <summary>Play a one shot action in a single frame.</summary>
     public MXActionHolder OneShot(MXAction.Act action)
     {
       MXActionHolder actionHolder = new MXActionHolder(action);
-      _holders.Add(actionHolder);
       actionHolder.Animate(0.0f).Wait(0.0f);
+      _holders.Add(actionHolder);
 
       return actionHolder;
+    }
+
+    /// <summary>Play multiple shot actions in a single frame.</summary>
+    public void OneShotSeq(MXAction.Act[] actions)
+    {
+      for (int a=0; a < actions.Length; a++)
+      {
+        MXActionHolder actionHolder = new MXActionHolder(actions[a]);
+        _holders.Add(actionHolder);
+        actionHolder.Animate(0.0f).Wait(0.0f);
+      }
     }
 
     /// <summary>Pause for a specific amount of duration.</summary>

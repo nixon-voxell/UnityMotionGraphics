@@ -3,6 +3,7 @@
 ### New Features
 
 - Added "set" type actions.
+- Added a whole lot of easing transitions.
 
 ### Changes
 
