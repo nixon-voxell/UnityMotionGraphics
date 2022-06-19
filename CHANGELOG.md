@@ -1,8 +1,13 @@
 ## [0.3.0]
 
+### New Features
+
+- Added "set" type actions.
+
 ### Changes
 
 - Only add `BUFFER_TIME` to the opposite moving direction when evaulating in `ISeqHolder`.
+- Uses `ref` for "play" type actions.
 
 ### Bug Fixes
 
