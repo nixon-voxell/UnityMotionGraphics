@@ -45,9 +45,14 @@ namespace Voxell.MotionGFX
       // direction that the time moves
       float timeDirection = math.sign(localTime - prevLocalTime);
       if (timeDirection == 0.0f) return;
+      bool forward = timeDirection == 1.0f;
 
-      float localStartTime = math.min(localTime, prevLocalTime) - BUFFER_TIME;
-      float localEndTime = math.max(localTime, prevLocalTime) + BUFFER_TIME;
+      float localStartTime = math.min(localTime, prevLocalTime);
+      float localEndTime = math.max(localTime, prevLocalTime);
+
+      // add buffer only on the opposite moving direction
+      if (forward) localStartTime -= BUFFER_TIME;
+      else localEndTime += BUFFER_TIME;
 
       int holderIdx = 0;
       int holderLength = 0;
@@ -62,7 +67,7 @@ namespace Voxell.MotionGFX
       }
 
       // time moving forward
-      if (timeDirection == 1.0f)
+      if (forward)
       {
         // evaluate forward from start to end
         int startIdx = holderIdx - (holderLength - 1);
