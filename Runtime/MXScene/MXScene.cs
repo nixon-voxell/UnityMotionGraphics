@@ -24,7 +24,7 @@ namespace Voxell.MotionGFX
     private protected List<IHolder> _holders;
 
     public float StartTime =>
-      clipPlayable?.timelineClip == null ? -1.0f : (float) clipPlayable.timelineClip.start;
+      clipPlayable?.timelineClip == null ? 0.0f : (float) clipPlayable.timelineClip.start;
 
     public float Duration => _duration;
     private protected float _duration;
@@ -43,11 +43,11 @@ namespace Voxell.MotionGFX
       _holders = new List<IHolder>(_clips.Length);
       for (int c=0; c < _clips.Length; c++) _holders.Add(new MXSequence());
 
-      TimelineClipUpdate();
       TimelineEditor.Refresh(RefreshReason.ContentsModified);
+      CreateSequences();
 
       // global time still 0.0f
-      if (clipPlayable != null)
+      if (clipPlayable != null && TimelineEditor.inspectedDirector != null)
       {
         float globalTime = (float) TimelineEditor.inspectedDirector.time;
         ISeqHolder seqHolder = this as ISeqHolder;
@@ -59,7 +59,7 @@ namespace Voxell.MotionGFX
     {
       TimelineClipUpdate();
 
-      if (clipPlayable != null)
+      if (clipPlayable != null && TimelineEditor.inspectedDirector != null)
       {
         float globalTime = (float) TimelineEditor.inspectedDirector.time;
         ISeqHolder seqHolder = this as ISeqHolder;
@@ -69,7 +69,7 @@ namespace Voxell.MotionGFX
 
     #endregion
 
-    private void TimelineClipUpdate()
+    private void CreateSequences()
     {
       _duration = 0.0f;
 
@@ -83,6 +83,11 @@ namespace Voxell.MotionGFX
         // accumulated duration will be the start time of the current sequence
         _duration += seq.CalculateDuration(_duration);
       }
+    }
+
+    private void TimelineClipUpdate()
+    {
+      CreateSequences();
 
       #if UNITY_EDITOR
       if (clipPlayable != null)
@@ -90,11 +95,11 @@ namespace Voxell.MotionGFX
         TimelineClip timelineClip = clipPlayable.timelineClip;
         clipPlayable.timelineClip.duration = _duration;
 
-        TrackAsset trackAsset = timelineClip.GetParentTrack();
-        if (trackAsset != null)
+        TimelineAsset timelineAsset = TimelineEditor.inspectedAsset;
+        if (timelineAsset != null)
         {
           // the minimum duration of a clip is the length of a single frame
-          double minDuration = 1/trackAsset.timelineAsset.editorSettings.frameRate;
+          double minDuration = 1.0d/timelineAsset.editorSettings.frameRate;
           timelineClip.duration = math.max(minDuration, _duration);
         }
 
@@ -112,8 +117,15 @@ namespace Voxell.MotionGFX
     private void OnDurationChange()
     {
       #if UNITY_EDITOR
-      if (TimelineEditor.inspectedDirector != null) TimelineEditor.inspectedDirector.RebuildGraph();
       TimelineEditor.Refresh(RefreshReason.WindowNeedsRedraw);
+      if (TimelineEditor.inspectedDirector != null)
+      {
+        TimelineEditor.inspectedDirector.RebuildGraph();
+        // Debug.Log("Graph Rebuilt");
+        // Debug.Log(TimelineEditor.inspectedDirector.duration);
+        // Debug.Log(TimelineEditor.inspectedAsset.duration);
+        // Debug.Log($"Actual: {_duration}, {__duration}");
+      }
       #endif
     }
   }
