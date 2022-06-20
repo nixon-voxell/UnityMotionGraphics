@@ -11,7 +11,7 @@
   ],
   "license": "Apache 2.0",
   "unity": "2020.3",
-  "version": "0.2.0",
+  "version": "0.2.0-preview",
   "dependencies": {
     "com.unity.timeline": "1.7.1",
     "com.unity.mathematics": "1.2.6",
