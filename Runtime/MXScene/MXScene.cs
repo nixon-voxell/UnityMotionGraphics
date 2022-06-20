@@ -44,8 +44,7 @@ namespace Voxell.MotionGFX
       _holders = new List<IHolder>(_clips.Length);
       for (int c=0; c < _clips.Length; c++) _holders.Add(new MXSequence());
 
-      CreateSequences();
-      OnDurationChange();
+      TimelineClipUpdate();
     }
 
     private void Update()
@@ -55,7 +54,7 @@ namespace Voxell.MotionGFX
 
     #endregion
 
-    public void TimelineClipUpdate()
+    internal void TimelineClipUpdate()
     {
       CreateSequences();
 
@@ -89,6 +88,8 @@ namespace Voxell.MotionGFX
 
       for (int h=0; h < _holders.Count; h++)
       {
+        if (_clips[h] == null) continue;
+
         MXSequence seq = _holders[h] as MXSequence;
         ISeqHolder seqHolder = seq as ISeqHolder;
         seqHolder.ClearHolders();

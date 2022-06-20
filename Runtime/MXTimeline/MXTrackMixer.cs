@@ -6,8 +6,6 @@ namespace Voxell.MotionGFX
   {
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
-      UnityEngine.Debug.Log("Mixer Process Frame");
-
       int inputCount = playable.GetInputCount();
       float trackTime = (float) playable.GetTime();
 
