@@ -4,7 +4,6 @@ using UnityEngine.Timeline;
 using Unity.Mathematics;
 
 #if UNITY_EDITOR
-using UnityEditor;
 using UnityEditor.Timeline;
 #endif
 
