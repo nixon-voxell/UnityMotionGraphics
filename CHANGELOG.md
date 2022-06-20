@@ -13,6 +13,7 @@
 - Clamp global time to start and end in `ISeqHolder`.
 - Scene evalulation now happens at `MXTrackMixer`.
 - Added `MXTimelineManager` to auto rebuild `PlayableDirector` graph when Unity reloads.
+- Ignore evalulation for `ISeqHolder` when `Holders` list is null or has 0 count.
 
 ### Bug Fixes
 
