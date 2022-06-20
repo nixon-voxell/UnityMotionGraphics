@@ -44,7 +44,6 @@ namespace Voxell.MotionGFX
       for (int c=0; c < _clips.Length; c++) _holders.Add(new MXSequence());
 
       TimelineEditor.Refresh(RefreshReason.ContentsModified);
-      CreateSequences();
 
       // global time still 0.0f
       if (clipPlayable != null && TimelineEditor.inspectedDirector != null)

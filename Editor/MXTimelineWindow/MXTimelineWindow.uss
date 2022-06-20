@@ -1,0 +1,5 @@
+Button:hover:active { background-color: rgb(80, 80, 80); }
+
+#save-asset { background-color: rgb(0, 112, 60); }
+#save-asset:hover { background-color: rgb(0, 148, 79); }
+#save-asset:active { background-color: rgb(0, 102, 54); }
