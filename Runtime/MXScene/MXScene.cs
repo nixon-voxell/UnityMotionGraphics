@@ -4,6 +4,7 @@ using UnityEngine.Timeline;
 using Unity.Mathematics;
 
 #if UNITY_EDITOR
+using UnityEditor;
 using UnityEditor.Timeline;
 #endif
 
@@ -43,30 +44,44 @@ namespace Voxell.MotionGFX
       _holders = new List<IHolder>(_clips.Length);
       for (int c=0; c < _clips.Length; c++) _holders.Add(new MXSequence());
 
-      TimelineEditor.Refresh(RefreshReason.ContentsModified);
-
-      // global time still 0.0f
-      if (clipPlayable != null && TimelineEditor.inspectedDirector != null)
-      {
-        float globalTime = (float) TimelineEditor.inspectedDirector.time;
-        ISeqHolder seqHolder = this as ISeqHolder;
-        seqHolder.InitEvaluation(globalTime);
-      }
+      CreateSequences();
+      OnDurationChange();
     }
 
     private void Update()
     {
       TimelineClipUpdate();
-
-      if (clipPlayable != null && TimelineEditor.inspectedDirector != null)
-      {
-        float globalTime = (float) TimelineEditor.inspectedDirector.time;
-        ISeqHolder seqHolder = this as ISeqHolder;
-        seqHolder.Evaluate(globalTime);
-      }
     }
 
     #endregion
+
+    public void TimelineClipUpdate()
+    {
+      CreateSequences();
+
+      #if UNITY_EDITOR
+      if (clipPlayable != null)
+      {
+        TimelineClip timelineClip = clipPlayable.timelineClip;
+        clipPlayable.timelineClip.duration = _duration;
+
+        TimelineAsset timelineAsset = TimelineEditor.inspectedAsset;
+        if (timelineAsset != null)
+        {
+          // the minimum duration of a clip is the length of a single frame
+          double minDuration = 1.0d/timelineAsset.editorSettings.frameRate;
+          timelineClip.duration = math.max(minDuration, _duration);
+          MXClipPlayable clipPlayable = timelineClip.asset as MXClipPlayable;
+        }
+
+        if (__duration != _duration)
+        {
+          OnDurationChange();
+          __duration = _duration;
+        }
+      }
+      #endif
+    }
 
     private void CreateSequences()
     {
@@ -84,47 +99,13 @@ namespace Voxell.MotionGFX
       }
     }
 
-    private void TimelineClipUpdate()
-    {
-      CreateSequences();
-
-      #if UNITY_EDITOR
-      if (clipPlayable != null)
-      {
-        TimelineClip timelineClip = clipPlayable.timelineClip;
-        clipPlayable.timelineClip.duration = _duration;
-
-        TimelineAsset timelineAsset = TimelineEditor.inspectedAsset;
-        if (timelineAsset != null)
-        {
-          // the minimum duration of a clip is the length of a single frame
-          double minDuration = 1.0d/timelineAsset.editorSettings.frameRate;
-          timelineClip.duration = math.max(minDuration, _duration);
-        }
-
-        if (__duration != _duration)
-        {
-          OnDurationChange();
-          __duration = _duration;
-        }
-      }
-      #endif
-    }
-
     /// <summary>Redraw timeline window and rebuild director grpah.</summary>
     /// <remarks>The director graph needs to be rebuilt in order to cater for the change in clip length</remarks>
     private void OnDurationChange()
     {
       #if UNITY_EDITOR
+      if (TimelineEditor.inspectedDirector != null) TimelineEditor.inspectedDirector.RebuildGraph();
       TimelineEditor.Refresh(RefreshReason.WindowNeedsRedraw);
-      if (TimelineEditor.inspectedDirector != null)
-      {
-        TimelineEditor.inspectedDirector.RebuildGraph();
-        // Debug.Log("Graph Rebuilt");
-        // Debug.Log(TimelineEditor.inspectedDirector.duration);
-        // Debug.Log(TimelineEditor.inspectedAsset.duration);
-        // Debug.Log($"Actual: {_duration}, {__duration}");
-      }
       #endif
     }
   }

@@ -6,6 +6,7 @@ namespace Voxell.MotionGFX
     float Duration { get; }
     float EndTime { get; }
 
+    void InitEvaluation(float globalTime) => Evaluate(globalTime);
     void Evaluate(float globalTime);
   }
 }

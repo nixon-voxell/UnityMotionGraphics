@@ -15,7 +15,7 @@ namespace Voxell.MotionGFX
 
     void ClearHolders() => Holders.Clear();
 
-    void InitEvaluation(float globalTime)
+    void IHolder.InitEvaluation(float globalTime)
     {
       globalTime = math.clamp(globalTime, StartTime, EndTime);
       UpdatePreviousData(globalTime);
@@ -29,12 +29,12 @@ namespace Voxell.MotionGFX
       }
 
       // evaluate from last holder to holder idx
-      for (int h=Holders.Count; h-- > holderIdx;) Holders[h].Evaluate(localTime);
+      for (int h=Holders.Count; h-- > holderIdx+1;) Holders[h].InitEvaluation(localTime);
       // then evaluate from first holder to holder idx
-      for (int h=0; h < holderIdx; h++) Holders[h].Evaluate(localTime);
+      for (int h=0; h < holderIdx-1; h++) Holders[h].InitEvaluation(localTime);
 
       // lastly we evaluate the clip that is currently in the range of clip time
-      Holders[holderIdx].Evaluate(localTime);
+      Holders[holderIdx].InitEvaluation(localTime);
     }
 
     void IHolder.Evaluate(float globalTime)

@@ -17,10 +17,9 @@ namespace Voxell.MotionGFX
       MXScene scene = sceneRef.Resolve(graph.GetResolver());
       // assign playable asset to clip group component so that it can manually refresh
       clipBehaviour.scene = scene;
-      if (scene != null)
-      {
-        scene.clipPlayable = this;
-      }
+      clipBehaviour.Init();
+
+      if (scene != null) scene.clipPlayable = this;
 
       return playable;
     }

@@ -11,6 +11,8 @@
 - Uses `ref` for "play" type actions.
 - Added "alpha" to package version.
 - Clamp global time to start and end in `ISeqHolder`.
+- Scene evalulation now happens at `MXTrackMixer`.
+- Added `MXTimelineManager` to auto rebuild `PlayableDirector` graph when Unity reloads.
 
 ### Bug Fixes
 
