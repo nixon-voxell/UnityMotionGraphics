@@ -1,4 +1,4 @@
-## [0.3.0]
+## [0.2.1]
 
 ### New Features
 
@@ -9,7 +9,7 @@
 
 - Only add `BUFFER_TIME` to the opposite moving direction when evaulating in `ISeqHolder`.
 - Uses `ref` for "play" type actions.
-- Added "preview" to package version.
+- Added "alpha" to package version.
 
 ### Bug Fixes
 
