@@ -10,6 +10,7 @@
 - Only add `BUFFER_TIME` to the opposite moving direction when evaulating in `ISeqHolder`.
 - Uses `ref` for "play" type actions.
 - Added "alpha" to package version.
+- Clamp global time to start and end in `ISeqHolder`.
 
 ### Bug Fixes
 

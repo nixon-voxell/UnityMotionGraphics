@@ -17,6 +17,7 @@ namespace Voxell.MotionGFX
 
     void InitEvaluation(float globalTime)
     {
+      globalTime = math.clamp(globalTime, StartTime, EndTime);
       UpdatePreviousData(globalTime);
       float localTime = globalTime - StartTime;
 
@@ -38,6 +39,7 @@ namespace Voxell.MotionGFX
 
     void IHolder.Evaluate(float globalTime)
     {
+      globalTime = math.clamp(globalTime, StartTime, EndTime);
       float durationChange = Duration - PrevDuration;
       float localTime = globalTime - StartTime;
       float prevLocalTime = PrevGlobalTime - PrevStartTime + durationChange;
