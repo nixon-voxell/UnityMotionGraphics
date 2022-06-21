@@ -14,6 +14,7 @@
 - Scene evalulation now happens at `MXTrackMixer`.
 - Added `MXTimelineManager` to auto rebuild `PlayableDirector` graph when Unity reloads.
 - Ignore evalulation for `ISeqHolder` when `Holders` list is null or has 0 count.
+- Create instance of `MXClipBehaviour` before creating playable out of it.
 
 ### Bug Fixes
 

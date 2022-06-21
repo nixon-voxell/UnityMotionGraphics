@@ -99,6 +99,24 @@ namespace Voxell.MotionGFX
       }
     }
 
+    internal void Init()
+    {
+      for (int c=0; c < _clips.Length; c++)
+      {
+        if (_clips[c] == null) continue;
+        if (!_clips[c].Initialized) _clips[c].Init();
+      }
+    }
+
+    internal void CleanUp()
+    {
+      for (int c=0; c < _clips.Length; c++)
+      {
+        if (_clips[c] == null) continue;
+        if (_clips[c].Initialized) _clips[c].CleanUp();
+      }
+    }
+
     /// <summary>Redraw timeline window and rebuild director grpah.</summary>
     /// <remarks>The director graph needs to be rebuilt in order to cater for the change in clip length</remarks>
     private void OnDurationChange()

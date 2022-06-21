@@ -11,16 +11,11 @@ namespace Voxell.MotionGFX
 
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
-      ScriptPlayable<MXClipBehaviour> playable = ScriptPlayable<MXClipBehaviour>.Create(graph);
-      MXClipBehaviour clipBehaviour = playable.GetBehaviour();
-
       MXScene scene = sceneRef.Resolve(graph.GetResolver());
-      // assign playable asset to clip group component so that it can manually refresh
-      clipBehaviour.scene = scene;
-      clipBehaviour.Init();
-
       if (scene != null) scene.clipPlayable = this;
+      MXClipBehaviour clipBehaviour = new MXClipBehaviour() { scene = scene };
 
+      ScriptPlayable<MXClipBehaviour> playable = ScriptPlayable<MXClipBehaviour>.Create(graph, clipBehaviour);
       return playable;
     }
   }

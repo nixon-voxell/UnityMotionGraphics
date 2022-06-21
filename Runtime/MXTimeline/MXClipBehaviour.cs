@@ -10,9 +10,10 @@ namespace Voxell.MotionGFX
   {
     public MXScene scene;
 
-    public void Init()
+    public override void OnPlayableCreate(Playable playable)
     {
       if (scene == null) return;
+      scene.Init();
 
       #if UNITY_EDITOR
       if (TimelineEditor.inspectedDirector == null) return;
@@ -21,6 +22,12 @@ namespace Voxell.MotionGFX
       ISeqHolder seqHolder = scene;
       seqHolder.InitEvaluation(directorTime);
       #endif
+    }
+
+    public override void OnPlayableDestroy(Playable playable)
+    {
+      if (scene == null) return;
+      scene.CleanUp();
     }
   }
 }
