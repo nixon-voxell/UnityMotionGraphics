@@ -7,6 +7,6 @@ namespace Voxell.MotionGFX
   {
     public delegate void Act(float t);
 
-    public static void PauseAct(float t) {}
+    internal static void PauseAct(float t) {}
   }
 }
