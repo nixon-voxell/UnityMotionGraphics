@@ -1,3 +1,9 @@
+## [0.3.1]
+
+### Changes
+
+- Moved `MXAction` out from `Internal.cs` file into `MXAction.cs` file.
+
 ## [0.3.0]
 
 ### New Features
