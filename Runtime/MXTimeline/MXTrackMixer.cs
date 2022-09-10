@@ -14,7 +14,7 @@ namespace Voxell.MotionGFX
         ScriptPlayable<MXClipBehaviour> scriptPlayable = (ScriptPlayable<MXClipBehaviour>) playable.GetInput(i);
         MXClipBehaviour clipBehaviour = scriptPlayable.GetBehaviour();
 
-        ISeqHolder seqHolder = clipBehaviour.scene;
+        ISeqHolder seqHolder = clipBehaviour.Scene;
         seqHolder.Evaluate(trackTime);
       }
     }

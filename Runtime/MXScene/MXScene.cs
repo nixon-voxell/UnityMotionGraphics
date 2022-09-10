@@ -15,16 +15,16 @@ namespace Voxell.MotionGFX
   [ExecuteInEditMode]
   public class MXScene : MonoBehaviour, ISeqHolder
   {
-    [InspectOnly] public MXClipPlayable clipPlayable;
+    [InspectOnly] public MXClipPlayable ClipPlayable;
 
-    public AbstractMXClip[] Clips => _clips;
-    [SerializeField] private AbstractMXClip[] _clips;
+    public AbstractMXClip[] Clips => m_Clips;
+    [SerializeField] private AbstractMXClip[] m_Clips;
 
     List<IHolder> ISeqHolder.Holders => _holders;
     private protected List<IHolder> _holders;
 
     public float StartTime =>
-      clipPlayable?.timelineClip == null ? 0.0f : (float) clipPlayable.timelineClip.start;
+      ClipPlayable?.timelineClip == null ? 0.0f : (float) ClipPlayable.timelineClip.start;
 
     public float Duration => _duration;
     private protected float _duration;
@@ -40,8 +40,8 @@ namespace Voxell.MotionGFX
 
     private void OnValidate()
     {
-      _holders = new List<IHolder>(_clips.Length);
-      for (int c=0; c < _clips.Length; c++) _holders.Add(new MXSequence());
+      _holders = new List<IHolder>(m_Clips.Length);
+      for (int c=0; c < m_Clips.Length; c++) _holders.Add(new MXSequence());
 
       TimelineClipUpdate();
     }
@@ -58,10 +58,10 @@ namespace Voxell.MotionGFX
       CreateSequences();
 
       #if UNITY_EDITOR
-      if (clipPlayable != null)
+      if (ClipPlayable != null)
       {
-        TimelineClip timelineClip = clipPlayable.timelineClip;
-        clipPlayable.timelineClip.duration = _duration;
+        TimelineClip timelineClip = ClipPlayable.timelineClip;
+        ClipPlayable.timelineClip.duration = _duration;
 
         TimelineAsset timelineAsset = TimelineEditor.inspectedAsset;
         if (timelineAsset != null)
@@ -69,7 +69,7 @@ namespace Voxell.MotionGFX
           // the minimum duration of a clip is the length of a single frame
           double minDuration = 1.0d/timelineAsset.editorSettings.frameRate;
           timelineClip.duration = math.max(minDuration, _duration);
-          MXClipPlayable clipPlayable = timelineClip.asset as MXClipPlayable;
+          MXClipPlayable ClipPlayable = timelineClip.asset as MXClipPlayable;
         }
 
         if (__duration != _duration)
@@ -87,13 +87,13 @@ namespace Voxell.MotionGFX
 
       for (int h=0; h < _holders.Count; h++)
       {
-        if (_clips[h] == null) continue;
+        if (m_Clips[h] == null) continue;
 
         MXSequence seq = _holders[h] as MXSequence;
         ISeqHolder seqHolder = seq as ISeqHolder;
         seqHolder.ClearHolders();
 
-        _clips[h].CreateSequence(in seq);
+        m_Clips[h].CreateSequence(in seq);
         // accumulated duration will be the start time of the current sequence
         _duration += seq.CalculateDuration(_duration);
       }
@@ -101,19 +101,19 @@ namespace Voxell.MotionGFX
 
     internal void Init()
     {
-      for (int c=0; c < _clips.Length; c++)
+      for (int c=0; c < m_Clips.Length; c++)
       {
-        if (_clips[c] == null) continue;
-        if (!_clips[c].Initialized) _clips[c].Init();
+        if (m_Clips[c] == null) continue;
+        if (!m_Clips[c].Initialized) m_Clips[c].Init();
       }
     }
 
     internal void CleanUp()
     {
-      for (int c=0; c < _clips.Length; c++)
+      for (int c=0; c < m_Clips.Length; c++)
       {
-        if (_clips[c] == null) continue;
-        if (_clips[c].Initialized) _clips[c].CleanUp();
+        if (m_Clips[c] == null) continue;
+        if (m_Clips[c].Initialized) m_Clips[c].CleanUp();
       }
     }
 

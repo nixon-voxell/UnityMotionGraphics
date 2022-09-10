@@ -8,26 +8,26 @@ namespace Voxell.MotionGFX
 {
   public class MXClipBehaviour : PlayableBehaviour
   {
-    public MXScene scene;
+    public MXScene Scene;
 
     public override void OnPlayableCreate(Playable playable)
     {
-      if (scene == null) return;
-      scene.Init();
+      if (Scene == null) return;
+      Scene.Init();
 
       #if UNITY_EDITOR
       if (TimelineEditor.inspectedDirector == null) return;
       float directorTime = (float) TimelineEditor.inspectedDirector.time;
 
-      ISeqHolder seqHolder = scene;
+      ISeqHolder seqHolder = Scene;
       seqHolder.InitEvaluation(directorTime);
       #endif
     }
 
     public override void OnPlayableDestroy(Playable playable)
     {
-      if (scene == null) return;
-      scene.CleanUp();
+      if (Scene == null) return;
+      Scene.CleanUp();
     }
   }
 }

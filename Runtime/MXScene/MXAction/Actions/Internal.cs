@@ -3,10 +3,9 @@ using Unity.Mathematics;
 
 namespace Voxell.MotionGFX
 {
-  public static partial class MXAction
+  public delegate void MXAction(float t);
+  internal static class A_Internal
   {
-    public delegate void Act(float t);
-
     internal static void PauseAct(float t) {}
   }
 }

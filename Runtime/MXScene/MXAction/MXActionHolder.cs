@@ -4,46 +4,46 @@ namespace Voxell.MotionGFX
 {
   public class MXActionHolder : IHolder
   {
-    private MXAction.Act _action;
+    private MXAction m_Action;
 
-    public float StartTime => _startTime;
-    private protected float _startTime;
+    public float StartTime => m_StartTime;
+    private protected float m_StartTime;
 
-    public float Duration => _duration;
-    private protected float _duration;
+    public float Duration => m_Duration;
+    private protected float m_Duration;
 
-    public float EndTime => _startTime + _duration;
+    public float EndTime => m_StartTime + m_Duration;
 
-    public float WaitDuration => _waitDuration;
-    private float _waitDuration;
+    public float WaitDuration => m_WaitDuration;
+    private float m_WaitDuration;
 
-    public MXActionHolder(MXAction.Act action)
+    public MXActionHolder(MXAction action)
     {
-      this._action = action;
-      this._startTime = -1.0f;
-      this._duration = 1.0f;
-      this._waitDuration = 0.0f;
+      this.m_Action = action;
+      this.m_StartTime = -1.0f;
+      this.m_Duration = 1.0f;
+      this.m_WaitDuration = 0.0f;
     }
 
     public MXActionHolder Animate(float duration)
     {
-      _duration = math.max(duration, 0.0f);
+      m_Duration = math.max(duration, 0.0f);
       return this;
     }
 
     public MXActionHolder Wait(float duration = -1.0f)
     {
-      if (duration == -1.0f) _waitDuration = _duration;
-      else _waitDuration = math.max(duration, 0.0f);
+      if (duration == -1.0f) m_WaitDuration = m_Duration;
+      else m_WaitDuration = math.max(duration, 0.0f);
       return this;
     }
 
-    internal void SetStartTime(float startTime) => _startTime = startTime;
+    internal void SetStartTime(float startTime) => m_StartTime = startTime;
 
     public void Evaluate(float globalTime)
     {
       float t = CalculateTime(globalTime);
-      _action(t);
+      m_Action(t);
     }
 
     /// <returns>Unit time value that is between the range of 0.0f and 1.0f</returns>

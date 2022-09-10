@@ -13,10 +13,10 @@ namespace Voxell.MotionGFX
   [ExecuteInEditMode]
   public class MXTimelineManager : MonoBehaviour
   {
-    [InspectOnly, SerializeField] private PlayableDirector _playableDirector;
-    [InspectOnly, SerializeField] private double _time;
+    [InspectOnly, SerializeField] private PlayableDirector m_PlayableDirector;
+    [InspectOnly, SerializeField] private double m_Time;
 
-    private void Reset() => _playableDirector = GetComponent<PlayableDirector>();
+    private void Reset() => m_PlayableDirector = GetComponent<PlayableDirector>();
 
     #if UNITY_EDITOR
     private void OnEnable() => EditorApplication.delayCall += RebuildDirectorGraph;
@@ -25,15 +25,15 @@ namespace Voxell.MotionGFX
     [Button("Rebuild Playable Director Graph")]
     private void RebuildDirectorGraph()
     {
-      if (Application.isPlaying || _playableDirector == null) return;
-      _playableDirector.time = _time;
-      _playableDirector.RebuildGraph();
+      if (Application.isPlaying || m_PlayableDirector == null) return;
+      m_PlayableDirector.time = m_Time;
+      m_PlayableDirector.RebuildGraph();
     }
 
     private void Update()
     {
-      if (Application.isPlaying || _playableDirector == null) return;
-      _time = _playableDirector.time; 
+      if (Application.isPlaying || m_PlayableDirector == null) return;
+      m_Time = m_PlayableDirector.time; 
     }
   }
 }

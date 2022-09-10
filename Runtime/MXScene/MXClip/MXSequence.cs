@@ -28,7 +28,7 @@ namespace Voxell.MotionGFX
     #region Sequence Creation
 
     /// <summary>Play an action.</summary>
-    public MXActionHolder Play(MXAction.Act action)
+    public MXActionHolder Play(MXAction action)
     {
       MXActionHolder actionHolder = new MXActionHolder(action);
       _holders.Add(actionHolder);
@@ -37,7 +37,7 @@ namespace Voxell.MotionGFX
     }
 
     /// <summary>Play multiple actions.</summary>
-    public void PlaySeq(MXAction.Act[] actions, float animateTime, float waitTime)
+    public void PlaySeq(MXAction[] actions, float animateTime, float waitTime)
     {
       for (int a=0; a < actions.Length; a++)
       {
@@ -48,7 +48,7 @@ namespace Voxell.MotionGFX
     }
 
     /// <summary>Play a one shot action in a single frame.</summary>
-    public MXActionHolder OneShot(MXAction.Act action)
+    public MXActionHolder OneShot(MXAction action)
     {
       MXActionHolder actionHolder = new MXActionHolder(action);
       actionHolder.Animate(0.0f).Wait(0.0f);
@@ -58,7 +58,7 @@ namespace Voxell.MotionGFX
     }
 
     /// <summary>Play multiple shot actions in a single frame.</summary>
-    public void OneShotSeq(MXAction.Act[] actions)
+    public void OneShotSeq(MXAction[] actions)
     {
       for (int a=0; a < actions.Length; a++)
       {
@@ -69,7 +69,7 @@ namespace Voxell.MotionGFX
     }
 
     /// <summary>Pause for a specific amount of duration.</summary>
-    public void Pause(float duration) => Play(MXAction.PauseAct).Animate(duration).Wait(duration);
+    public void Pause(float duration) => Play(A_Internal.PauseAct).Animate(duration).Wait(duration);
 
     #endregion
 
