@@ -1,3 +1,18 @@
+## [0.3.0]
+
+### New Features
+
+- Added more action types:
+  - `TMPro` actions (color, alpha)
+  - `RectTransform` actions (anchored position)
+
+### Changes
+
+- Changed `Act` delegate to `MXAction` and removed `MXAction` static class, making the delegate independant.
+- Changed `MXAction` static class into multiple smaller static "Action" classes. (see New Features).
+- Turned all 2 spaces into 4 spaces.
+- Major refactoring on private and public variables (use of m_ and Capital Letter).
+
 ## [0.2.2]
 
 ### Bug Fixes
