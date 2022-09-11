@@ -3,6 +3,7 @@
 ### Changes
 
 - Moved `MXAction` out from `Internal.cs` file into `MXAction.cs` file.
+- Implementation of correct and optimized easing functions.
 
 ## [0.3.0]
 

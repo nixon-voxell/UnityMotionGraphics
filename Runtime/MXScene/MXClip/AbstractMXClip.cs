@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Voxell.MotionGFX
 {
+    [ExecuteInEditMode]
     public abstract class AbstractMXClip : MonoBehaviour
     {
         public bool Initialized { get; private set; } = false;
