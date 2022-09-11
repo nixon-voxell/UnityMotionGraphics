@@ -11,9 +11,9 @@ namespace Voxell.MotionGFX
             return _;
         }
 
-        public static MXAction SetRotation(float3 rotation, Transform transform)
+        public static MXAction SetRotation(quaternion rotation, Transform transform)
         {
-            void _(float t) => transform.localRotation = quaternion.EulerXYZ(rotation);
+            void _(float t) => transform.localRotation = rotation;
             return _;
         }
 
@@ -31,9 +31,9 @@ namespace Voxell.MotionGFX
         }
 
         public static MXAction Rotate(
-            float3 x, float3 y, Transform transform, MXMath.Transition transition
+            quaternion x, quaternion y, Transform transform, MXMath.Transition transition
         ) {
-            void _(float t) => transform.localRotation = quaternion.EulerXYZ(math.lerp(x, y, transition(t)));
+            void _(float t) => transform.localRotation = math.slerp(x, y, transition(t));
             return _;
         }
 

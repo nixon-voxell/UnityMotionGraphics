@@ -4,6 +4,7 @@
 
 - Moved `MXAction` out from `Internal.cs` file into `MXAction.cs` file.
 - Implementation of correct and optimized easing functions.
+- Use quartenions for rotations instead of euler angles.
 
 ## [0.3.0]
 
