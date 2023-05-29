@@ -1,0 +1,3 @@
+.unity-base-text-field__input {
+    min-width: 32px;
+}
