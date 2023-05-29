@@ -22,7 +22,6 @@ namespace Voxell.MotionGFX
         private void OnEnable() => EditorApplication.delayCall += RebuildDirectorGraph;
         #endif
 
-        // [Button("Rebuild Playable Director Graph")]
         private void RebuildDirectorGraph()
         {
             if (Application.isPlaying || m_PlayableDirector == null) return;

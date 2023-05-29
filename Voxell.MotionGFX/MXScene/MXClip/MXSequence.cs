@@ -25,8 +25,6 @@ namespace Voxell.MotionGFX
             this.m_Holders = new List<IHolder>();
         }
 
-        #region Sequence Creation
-
         /// <summary>Play an action.</summary>
         public MXActionHolder Play(MXAction action)
         {
@@ -70,8 +68,6 @@ namespace Voxell.MotionGFX
 
         /// <summary>Pause for a specific amount of duration.</summary>
         public void Pause(float duration) => Play(A_Internal.PauseAct).Animate(duration).Wait(duration);
-
-        #endregion
 
         /// <returns>Total duration that the sequence uses.</returns>
         internal float CalculateDuration(float startTime)

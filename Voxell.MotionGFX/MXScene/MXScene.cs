@@ -36,8 +36,6 @@ namespace Voxell.MotionGFX
         float ISeqHolder.PrevStartTime { get; set; }
         float ISeqHolder.PrevDuration { get; set; }
 
-        #region Unity Events
-
         private void OnValidate()
         {
             m_Holders = new List<IHolder>(m_Clips.Length);
@@ -50,8 +48,6 @@ namespace Voxell.MotionGFX
         {
             TimelineClipUpdate();
         }
-
-        #endregion
 
         internal void TimelineClipUpdate()
         {
