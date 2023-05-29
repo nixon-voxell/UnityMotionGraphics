@@ -9,7 +9,7 @@ using UnityEditor.Timeline;
 
 namespace Voxell.MotionGFX
 {
-    using Inspector;
+    using Util;
 
     [AddComponentMenu("Motion GFX/MX Scene")]
     [ExecuteInEditMode]

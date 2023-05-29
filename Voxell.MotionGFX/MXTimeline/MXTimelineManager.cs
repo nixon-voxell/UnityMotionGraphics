@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace Voxell.MotionGFX
 {
-    using Inspector;
+    using Util;
 
     [AddComponentMenu("Motion GFX/MX Timeline Manager")]
     [ExecuteInEditMode]
@@ -22,7 +22,7 @@ namespace Voxell.MotionGFX
         private void OnEnable() => EditorApplication.delayCall += RebuildDirectorGraph;
         #endif
 
-        [Button("Rebuild Playable Director Graph")]
+        // [Button("Rebuild Playable Director Graph")]
         private void RebuildDirectorGraph()
         {
             if (Application.isPlaying || m_PlayableDirector == null) return;
