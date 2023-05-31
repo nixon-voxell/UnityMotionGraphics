@@ -1,6 +1,6 @@
 {
-    "name": "VX.MotionGFX.Editor",
-    "rootNamespace": "VX.MotionGFX.Editor",
+    "name": "Voxell.MotionGFX.Editor",
+    "rootNamespace": "Voxell.MotionGFX.Editor",
     "references": [
         "GUID:5d380aad12070eb419c6e27b68ec6534",
         "GUID:3cac15be4c80a214b9ad860f10cfb155",

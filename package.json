@@ -1,7 +1,7 @@
 {
   "name": "voxell.motiongfx",
-  "displayName": "VX Motion GFX",
-  "author": "Nixon",
+  "displayName": "Motion GFX",
+  "author": "@Voxell",
   "description": "Motion graphics creation tool.",
   "keywords": [
     "motion",
@@ -11,12 +11,12 @@
   ],
   "license": "Apache 2.0",
   "unity": "2020.3",
-  "version": "0.2.2-alpha",
+  "version": "0.1.0",
   "dependencies": {
+    "voxell.util": "0.1.0",
     "com.unity.timeline": "1.7.1",
     "com.unity.mathematics": "1.2.6",
-    "com.unity.textmeshpro": "3.0.6",
-    "voxell.util": "1.4.2"
+    "com.unity.textmeshpro": "3.0.6"
   },
   "hideInEditor": false
 }

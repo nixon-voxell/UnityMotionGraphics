@@ -1,6 +1,6 @@
 {
-    "name": "VX.MotionGFX.ECS",
-    "rootNamespace": "VX.MotionGFX.ECS",
+    "name": "Voxell.MotionGFX.ECS",
+    "rootNamespace": "Voxell.MotionGFX.ECS",
     "references": [
         "GUID:5d380aad12070eb419c6e27b68ec6534",
         "GUID:d8b63aba1907145bea998dd612889d6b",
