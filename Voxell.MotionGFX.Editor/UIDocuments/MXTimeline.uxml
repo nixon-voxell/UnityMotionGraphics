@@ -1,11 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/voxell.motiongfx/Voxell.MotionGFX.Editor/StyleSheets/Global.uss?fileID=7433441132597879392&amp;guid=01408a8e84e440c4e81a80275b65dff2&amp;type=3#Global" />
-    <uie:Toolbar style="padding-left: 4px; padding-right: 4px;">
+    <uie:Toolbar name="toolbar" style="padding-left: 4px; padding-right: 4px;">
         <ui:FloatField label="Playback Speed" value="1" name="playback-speed-field" />
         <uie:ToolbarSpacer />
-        <ui:ProgressBar style="width: 128px;" />
+        <ui:ProgressBar name="progress-bar" style="width: 128px;" />
         <uie:ToolbarSpacer />
         <uie:ToolbarToggle focusable="false" name="play-toggle-btn" style="background-image: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-1087164816274819069&amp;guid=dcf2039ba7920bc44bc7c9e6d18ee844&amp;type=3#arrow-right@2x&apos;); width: 16px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
     </uie:Toolbar>
-    <ui:VisualElement style="flex-grow: 1;" />
+    <ui:VisualElement name="timeline-canvas" style="flex-grow: 1;" />
 </ui:UXML>

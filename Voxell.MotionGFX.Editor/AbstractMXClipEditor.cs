@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Voxell.MotionGFX
+namespace Voxell.MotionGFX.Editor
 {
     [CustomEditor(typeof(AbstractMXClip), true)]
-    public class AbstractMXClipEditor : Editor
+    public class AbstractMXClipEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
