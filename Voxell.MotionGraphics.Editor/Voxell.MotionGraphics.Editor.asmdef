@@ -1,0 +1,22 @@
+{
+    "name": "Voxell.MotionGraphics.Editor",
+    "rootNamespace": "Voxell.MotionGraphics.Editor",
+    "references": [
+        "GUID:de598d3801939b744b5b86e072716790",
+        "GUID:5d380aad12070eb419c6e27b68ec6534",
+        "GUID:f06555f75b070af458a003d92f9efb00",
+        "GUID:02f771204943f4a40949438e873e3eff",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
