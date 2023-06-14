@@ -1,0 +1,16 @@
+{
+    "name": "Voxell.MotionGraphics.Storage",
+    "rootNamespace": "Voxell.MotionGraphics.Storage",
+    "references": [
+        "GUID:2e5572561bb4c734eb6db5867c5efbde"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

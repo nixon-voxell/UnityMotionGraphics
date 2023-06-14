@@ -21,6 +21,10 @@ namespace Voxell.MotionGraphics
         public void OnUpdate(ref SystemState state)
         {
             RefRW<TimelineStateComp> timelineStateComp = SystemAPI.GetSingletonRW<TimelineStateComp>();
+
+            if (!timelineStateComp.ValueRO.Playing) return;
+
+            timelineStateComp.ValueRW.Time += SystemAPI.Time.DeltaTime;
         }
     }
 }

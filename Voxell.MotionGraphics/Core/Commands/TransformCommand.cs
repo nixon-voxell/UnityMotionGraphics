@@ -6,7 +6,7 @@ using Unity.Burst;
 
 namespace Voxell.MotionGraphics
 {
-    using static MotionCommand;
+    using static Command;
     // using static Interpolation;
 
     [BurstCompile]

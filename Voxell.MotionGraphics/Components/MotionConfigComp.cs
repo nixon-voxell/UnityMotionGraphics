@@ -2,8 +2,10 @@ using Unity.Entities;
 
 namespace Voxell.MotionGraphics
 {
+    using Storage;
+
     public struct MotionConfigComp : IComponentData
     {
-        public int FPS;
+        public MotionConfig MotionConfig;
     }
 }
