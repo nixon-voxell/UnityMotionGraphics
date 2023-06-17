@@ -16,15 +16,6 @@ namespace Voxell.MotionGraphics
                     MotionConfig = authoring.so_MotionConfig.Data,
                 }
             );
-
-            // TODO: improve how this component is added
-            this.AddComponent<TimelineStateComp>(
-                entity, new TimelineStateComp
-                {
-                    Time = 0.0f,
-                    Playing = true,
-                }
-            );
         }
     }
 }
