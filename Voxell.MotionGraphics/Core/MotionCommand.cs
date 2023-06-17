@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using Unity.Burst;
 
 namespace Voxell.MotionGraphics
@@ -12,11 +13,22 @@ namespace Voxell.MotionGraphics
         public FunctionPointer<CommandDelegate> Command;
         public FunctionPointer<InterpolationDelegate> Interpolation;
 
+        public float End => this.Start + this.Duration;
+
         public void Execute(float time)
         {
-            float t = (time - this.Start) / this.Duration;
+            time = (time - this.Start) / this.Duration;
 
-            Command.Invoke(Interpolation.Invoke(t));
+            // make sure t is within the unit value
+            time = math.clamp(time, 0.0f, 1.0f);
+            Command.Invoke(Interpolation.Invoke(time));
+        }
+
+        public static void Play(
+            FunctionPointer<CommandDelegate> command,
+            FunctionPointer<InterpolationDelegate> interpolation
+        ) {
+            
         }
     }
 }

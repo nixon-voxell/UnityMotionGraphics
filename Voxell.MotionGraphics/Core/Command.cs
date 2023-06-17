@@ -6,7 +6,7 @@ using Unity.Burst;
 namespace Voxell.MotionGraphics
 {
     [BurstCompile]
-    public static class Command
+    public static partial class Command
     {
         public delegate void CommandDelegate(float time);
 
