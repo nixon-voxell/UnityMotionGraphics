@@ -27,9 +27,9 @@ namespace Voxell.MotionGraphics
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void IncrementElapsedTime(float amount)
+        public static void IncrementElapsedTime(float duration)
         {
-            ElapsedTime += amount;
+            ElapsedTime += duration;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -30,6 +30,13 @@ namespace Voxell.MotionGraphics
 
         [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IntersectRange(float xstart, float xend, float ystart, float yend)
+        {
+            return (xstart <= yend) && (xend >= ystart);
+        }
+
+        [BurstCompile]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CubicBezier(float p0x, float p0y, float p1x, float p1y, float t, out float2 p)
         {
             CubicBezier(new float2(p0x, p0y), new float2(p1x, p1y), t, out p);
