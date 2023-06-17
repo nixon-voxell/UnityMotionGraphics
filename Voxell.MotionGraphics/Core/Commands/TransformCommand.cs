@@ -7,7 +7,7 @@ using Unity.Burst;
 namespace Voxell.MotionGraphics
 {
     using static Command;
-    // using static Interpolation;
+    using static Interpolation;
 
     [BurstCompile]
     public static class TransformCommand
@@ -20,21 +20,25 @@ namespace Voxell.MotionGraphics
             return CreateFuncPointer(Func);
         }
 
-        // public static void Translate(
-        //     this RefRW<LocalTransform> transform, in float3 to, in float duration,
-        //     in FunctionPointer<InterpolationDelegate> interpolation
-        // ) {
-        //     FunctionPointer<CommandDelegate> command = Translate(transform.ValueRO.Position, to, transform);
+        public static MotionCommand Translate(
+            this RefRW<LocalTransform> transform, in float3 to, in float duration,
+            in FunctionPointer<InterpolationDelegate> interpolation
+        ) {
+            FunctionPointer<CommandDelegate> command = Translate(transform.ValueRO.Position, to, transform);
 
-        //     MotionCommand motionCommand = new MotionCommand
-        //     {
-        //         Command = command,
-        //         Interpolation = interpolation,
-        //         Duration = duration,
-        //         // TODO: change to to actual start time
-        //         Start = 0.0f,
-        //     };
-        // }
+            MotionCommand motionCommand = new MotionCommand
+            {
+                Command = command,
+                Interpolation = interpolation,
+                Start = Command.ElapsedTime,
+                Duration = duration,
+            };
+
+            Command.IncrementElapsedTime(duration);
+            transform.ValueRW.Position = to;
+
+            return motionCommand;
+        }
 
         public static FunctionPointer<CommandDelegate> Rotate(
             quaternion a, quaternion b, RefRW<LocalTransform> transform

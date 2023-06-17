@@ -8,45 +8,43 @@ namespace Voxell.MotionGraphics
     [StructLayout(LayoutKind.Auto)]
     public partial struct MotionCommandSystem : ISystem, System.IDisposable
     {
-        /// <summary>Collection of all MotionCommands</summary>
-        public NativeList<MotionCommand> na_Commands;
-        /// <summary>Command indices that is being processed in the previous execution (frame).</summary>
-        public NativeList<int> na_PrevProcessedCommands;
-
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<MotionConfigComp>();
-            state.RequireForUpdate<TimelineStateComp>();
+            state.RequireForUpdate<TimelineComp>();
 
-            this.na_Commands =  new NativeList<MotionCommand>(1024, Allocator.Persistent);
-            this.na_PrevProcessedCommands = new NativeList<int>(128, Allocator.Persistent);
-            // initialize previous command with the first element
-            this.na_PrevProcessedCommands.Add(0);
+            state.EntityManager.AddComponentData<TimelineComp>(
+                state.SystemHandle, new TimelineComp
+                {
+                    na_Commands = new NativeList<MotionCommand>(1024, Allocator.Persistent),
+                    Playing = true,
+                    PrevTime = 0.0f,
+                    CurrTime = 0.0f,
+                }
+            );
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            RefRW<TimelineStateComp> timelineStateComp = SystemAPI.GetSingletonRW<TimelineStateComp>();
+            RefRW<TimelineComp> timelineComp = SystemAPI.GetSingletonRW<TimelineComp>();
 
-            if (!timelineStateComp.ValueRO.Playing) return;
+            TimelineComp timelineCompVal = timelineComp.ValueRO;
+            MotionGraphicsEngine.ExecuteCommand(ref timelineCompVal, ref timelineCompVal.na_Commands);
 
-            // first process all previous MotionCommands
-            for (int pc = 0; pc < this.na_PrevProcessedCommands.Length; pc++)
-            {
-                
-            }
-
-            // then search for potential MotionCommands to be process in this frame
-
-            timelineStateComp.ValueRW.Time += SystemAPI.Time.DeltaTime;
+            // update time values
+            timelineComp.ValueRW.PrevTime = timelineComp.ValueRO.CurrTime;
+            timelineComp.ValueRW.CurrTime += SystemAPI.Time.DeltaTime;
         }
 
         public void Dispose()
         {
-            this.na_Commands.Dispose();
-            this.na_PrevProcessedCommands.Dispose();
+            TimelineComp timelineComp = SystemAPI.GetSingleton<TimelineComp>();
+            if (timelineComp.na_Commands.IsCreated)
+            {
+                timelineComp.na_Commands.Dispose();
+            }
         }
     }
 }
