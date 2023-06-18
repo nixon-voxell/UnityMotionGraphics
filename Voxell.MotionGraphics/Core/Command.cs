@@ -31,21 +31,5 @@ namespace Voxell.MotionGraphics
         {
             ElapsedTime += duration;
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Command CreateCommand<Comp, Command, T>(
-            RefRW<Comp> component, T start, T end
-        )
-        where Comp: unmanaged, IComponentData
-        where Command : unmanaged, ICommandData<Comp, T>
-        where T : unmanaged
-        {
-            return new Command
-            {
-                Component = component,
-                Start = start,
-                End = end,
-            };
-        }
     }
 }
