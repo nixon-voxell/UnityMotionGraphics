@@ -1,3 +1,5 @@
+> I am working on a new Motion Graphics library using Bevy [here](https://github.com/nixon-voxell/bevy_motiongfx)!
+
 # Unity Motion Graphics
 
 A package to speed up and simplify the process of motion graphics creation.
